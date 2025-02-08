@@ -10,7 +10,7 @@ def load_data():
 @st.cache_resource
 def load_model():
     model = CatBoostRegressor()
-    model.load_model("catboost_model.cbm")
+    model.load_model("new_catboost_model.cbm")
     return model
 
 data = load_data()
