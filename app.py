@@ -3,9 +3,6 @@ import pandas as pd
 import joblib
 from catboost import CatBoostRegressor
 
-# -------------------------------
-# Cached Functions to Load Artifacts
-# -------------------------------
 @st.cache_resource
 def load_data():
     data = pd.read_csv("Cars_Data.csv")
@@ -19,12 +16,10 @@ def load_model():
 
 @st.cache_resource
 def load_expected_columns():
-    # expected_columns.pkl contains the list of feature names from training (after get_dummies)
     return joblib.load("expected_columns.pkl")
 
 @st.cache_resource
 def load_scaler():
-    # scaler.pkl is the fitted StandardScaler from training
     return joblib.load("scaler.pkl")
 
 # -------------------------------
@@ -49,22 +44,22 @@ st.markdown(
         background: linear-gradient(135deg, #1e1e1e, #2e2e2e) !important;
         color: #e0e0e0 !important;
     }
-    .css-18e3th9 {
-        padding: 2rem 1rem !important;
+    .main-container {
+        padding: 2rem 1rem;
     }
-    /* Sidebar styles */
-    [data-testid="stSidebar"] {
-        background-color: #121212 !important;
-        border-right: 1px solid #333;
-        padding: 1rem;
+    /* Container for input fields */
+    .input-container {
+        background: #121212;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
     }
-    /* Customizing input fields in sidebar */
+    /* Input widget styling */
     .stSelectbox, .stNumberInput, .stTextInput {
         border-radius: 8px !important;
         background-color: #2e2e2e !important;
         border: 1px solid #444 !important;
         color: #e0e0e0 !important;
-        padding: 10px;
     }
     /* Modern button styling */
     .stButton>button {
@@ -99,6 +94,13 @@ st.markdown(
         box-shadow: 0 8px 16px rgba(0,0,0,0.3);
         margin-bottom: 20px;
     }
+    /* Footer styling */
+    .footer {
+        text-align: center;
+        color: #777;
+        margin-top: 40px;
+        font-size: 14px;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -108,19 +110,35 @@ st.markdown(
 st.title("Used Car Price Predictor")
 st.image("carwow-shutterstock_2356848413.jpg", use_container_width=True)
 
+# Instead of a sidebar, we create an input container in the main area
+with st.container():
+    st.markdown("<div class='input-container'>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: #e0e0e0;'>Enter Car Specifications</h3>", unsafe_allow_html=True)
 
-# -------------------------------
 # Create Dropdown Mappings from Original Data
-# -------------------------------
 brands = data["brand"].unique().tolist()
 models_list = data["model"].unique().tolist()  # renamed to avoid conflict with model variable
 colors = data["color"].unique().tolist()
 transmissions = data["transmission_type"].unique().tolist()
 fuel_types = data["fuel_type"].unique().tolist()
 
-# -------------------------------
+# Use columns for a cleaner layout
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    brand = st.selectbox("Brand", brands)
+    model_input = st.selectbox("Model", models_list)
+    color = st.selectbox("Color", colors)
+with col2:
+    transmission = st.selectbox("Transmission", transmissions)
+    fuel_type = st.selectbox("Fuel Type", fuel_types)
+    power_ps = st.number_input("Power (PS)", min_value=50, value=150)
+with col3:
+    power_kw = st.number_input("Power (KW)", min_value=50 * 0.7355, value=150 * 0.7355)
+    mileage = st.number_input("Mileage (km)", min_value=0, value=50000)
+    vehicle_age = st.number_input("Vehicle Age (years)", min_value=0, value=5)
+
 # Sidebar Inputs
-# -------------------------------
 st.sidebar.header("Car Specifications")
 brand_input = st.sidebar.selectbox("Brand", brands)
 model_input = st.sidebar.selectbox("Model", models_list)
@@ -131,13 +149,9 @@ power_ps = st.sidebar.number_input("Power (PS)", min_value=50, value=150)
 power_kw = st.sidebar.number_input("Power (KW)", min_value=50 * 0.7355, value=150 * 0.7355)
 mileage = st.sidebar.number_input("Mileage (km)", min_value=0, value=50000)
 vehicle_age = st.sidebar.number_input("Vehicle Age (years)", min_value=0, value=5)
-# Added missing input for fuel consumption
 fuel_consumption = st.sidebar.number_input("Fuel Consumption (L/100km)", min_value=0.0, value=8.0)
 
-# -------------------------------
 # Create Raw Input DataFrame
-# -------------------------------
-# The keys here should match the column names in your training data prior to one-hot encoding.
 raw_input = pd.DataFrame([{
     "power_kw": power_kw,
     "power_ps": power_ps,
@@ -151,22 +165,14 @@ raw_input = pd.DataFrame([{
     "fuel_type": fuel_type_input
 }])
 
-# -------------------------------
 # Preprocessing: One-Hot Encoding for Categorical Features
-# -------------------------------
 categorical_columns = ["brand", "model", "color", "transmission_type", "fuel_type"]
 input_dummies = pd.get_dummies(raw_input, columns=categorical_columns, drop_first=True)
 
-# -------------------------------
-# Align Input Data with Expected Feature Columns
-# -------------------------------
 # Reindex the DataFrame to match the exact order and names from training.
 input_df = input_dummies.reindex(columns=expected_columns, fill_value=0)
 
-# -------------------------------
 # Scale Numerical Features
-# -------------------------------
-# List of numerical features as used during training.
 numerical_columns = ["power_kw", "power_ps", "fuel_consumption_l_100km.1", "mileage_in_km", "vehicle_age"]
 input_df[numerical_columns] = scaler.transform(input_df[numerical_columns])
 
@@ -174,10 +180,19 @@ input_df[numerical_columns] = scaler.transform(input_df[numerical_columns])
 # st.write("Processed Input Data:")
 # st.write(input_df)
 
-# -------------------------------
+# Display input summary in a container
+with st.container():
+    st.markdown("<div class='input-container'>", unsafe_allow_html=True)
+    st.markdown("<h4>Car Specifications</h4>", unsafe_allow_html=True)
+    st.dataframe(input_df, use_container_width=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
 # Prediction
-# -------------------------------
 if st.sidebar.button("Predict Price"):
     prediction = model.predict(input_df)[0]
     st.subheader(f"Predicted Value: ${prediction:,.2f}")
+    st.markdown(f"<div class='prediction-card'>Predicted Price: <br> ${predicted_price:,.2f}</div>", unsafe_allow_html=True)
     st.balloons()
+    
+# Footer
+st.markdown("<div class='footer'>Modern Car Price Predictor App © 2025</div>", unsafe_allow_html=True)
