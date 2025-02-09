@@ -64,22 +64,6 @@ st.markdown(
 st.title("Used Car Price Predictor")
 st.image("carwow-shutterstock_2356848413.jpg")
 
-# Main content area using columns
-col1, col2 = st.columns(2)
-with col1:
-    st.subheader("Input Summary")
-    st.write(f"**Brand:** {brand}")
-    st.write(f"**Model:** {model_name}")
-    st.write(f"**Color:** {color}")
-    st.write(f"**Transmission:** {transmission}")
-    st.write(f"**Fuel Type:** {fuel_type}")
-with col2:
-    st.subheader("Technical Specs")
-    st.write(f"**Power (PS):** {power_ps}")
-    st.write(f"**Power (KW):** {power_kw:.2f}")
-    st.write(f"**Mileage (km):** {mileage}")
-    st.write(f"**Vehicle Age:** {vehicle_age}")
-
 
 # -------------------------------
 # Create Dropdown Mappings from Original Data
@@ -153,3 +137,20 @@ if st.sidebar.button("Predict Price"):
     prediction = model.predict(input_df)[0]
     st.subheader(f"Predicted Value: ${prediction:,.2f}")
     st.balloons()
+
+
+# Main content area using columns
+col1, col2 = st.columns(2)
+with col1:
+    st.subheader("Input Summary")
+    st.write(f"**Brand:** {brand}")
+    st.write(f"**Model:** {model_name}")
+    st.write(f"**Color:** {color}")
+    st.write(f"**Transmission:** {transmission}")
+    st.write(f"**Fuel Type:** {fuel_type}")
+with col2:
+    st.subheader("Technical Specs")
+    st.write(f"**Power (PS):** {power_ps}")
+    st.write(f"**Power (KW):** {power_kw:.2f}")
+    st.write(f"**Mileage (km):** {mileage}")
+    st.write(f"**Vehicle Age:** {vehicle_age}")
