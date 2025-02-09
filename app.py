@@ -40,26 +40,18 @@ scaler = load_scaler()
 st.markdown(
     """
     <style>
-    .reportview-container {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    body {
         background-color: #f4f6f9;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .sidebar .sidebar-content {
-        background-color: #ffffff;
-        border-right: 2px solid #e0e0e0;
-    }
-    button {
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
+    h1 {
+        text-align: center;
+        color: #333333;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
-
 
 st.title("Used Car Price Predictor")
 st.image("carwow-shutterstock_2356848413.jpg")
