@@ -35,11 +35,51 @@ model = load_model()
 expected_columns = load_expected_columns()
 scaler = load_scaler()
 
-# -------------------------------
-# App Title and Image
-# -------------------------------
+
+# Custom CSS injection
+st.markdown(
+    """
+    <style>
+    .reportview-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f9;
+    }
+    .sidebar .sidebar-content {
+        background-color: #ffffff;
+        border-right: 2px solid #e0e0e0;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 st.title("Used Car Price Predictor")
-st.background_image("carwow-shutterstock_2356848413.jpg")
+st.image("carwow-shutterstock_2356848413.jpg")
+
+# Main content area using columns
+col1, col2 = st.columns(2)
+with col1:
+    st.subheader("Input Summary")
+    st.write(f"**Brand:** {brand}")
+    st.write(f"**Model:** {model_name}")
+    st.write(f"**Color:** {color}")
+    st.write(f"**Transmission:** {transmission}")
+    st.write(f"**Fuel Type:** {fuel_type}")
+with col2:
+    st.subheader("Technical Specs")
+    st.write(f"**Power (PS):** {power_ps}")
+    st.write(f"**Power (KW):** {power_kw:.2f}")
+    st.write(f"**Mileage (km):** {mileage}")
+    st.write(f"**Vehicle Age:** {vehicle_age}")
+
 
 # -------------------------------
 # Create Dropdown Mappings from Original Data
