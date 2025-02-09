@@ -169,7 +169,7 @@ with st.container():
     st.markdown("<h4>Car Specifications</h4>", unsafe_allow_html=True)
     
     # Get the key-value pairs from the first (and only) row of input_df    
-    input_items = list(input_df.iloc[0].items())
+    input_items = list(raw_input.iloc[0].items())
     
     n = len(input_items)
     base = n // 3
