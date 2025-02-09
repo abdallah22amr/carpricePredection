@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 from catboost import CatBoostRegressor
-use_column_width
+
 # -------------------------------
 # Cached Functions to Load Artifacts
 # -------------------------------
@@ -90,7 +90,7 @@ st.markdown(
 
 # App title and header image
 st.title("Used Car Price Predictor")
-st.image("carwow-shutterstock_2356848413.jpg", use_column_width=True)
+st.image("carwow-shutterstock_2356848413.jpg", use_container_width=True)
 
 
 # -------------------------------
