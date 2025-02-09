@@ -110,10 +110,7 @@ st.markdown(
 st.title("Used Car Price Predictor")
 st.image("carwow-shutterstock_2356848413.jpg", use_container_width=True)
 
-# Instead of a sidebar, we create an input container in the main area
-with st.container():
-    st.markdown("<div class='input-container'>", unsafe_allow_html=True)
-    st.markdown("<h3 style='text-align: center; color: #e0e0e0;'>Enter Car Specifications</h3>", unsafe_allow_html=True)
+
 
 # Create Dropdown Mappings from Original Data
 brands = data["brand"].unique().tolist()
