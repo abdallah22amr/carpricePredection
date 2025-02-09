@@ -167,14 +167,13 @@ input_df[numerical_columns] = scaler.transform(input_df[numerical_columns])
 with st.container():
     st.markdown("<div class='input-container'>", unsafe_allow_html=True)
     st.markdown("<h4>Car Specifications</h4>", unsafe_allow_html=True)
-    st.dataframe(input_df, use_container_width=True)
+    st.dataframe(raw_input, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Prediction
 if st.sidebar.button("Predict Price"):
     prediction = model.predict(input_df)[0]
     st.subheader(f"Predicted Value: ${prediction:,.2f}")
-    st.markdown(f"<div class='prediction-card'>Predicted Price: <br> ${predicted_price:,.2f}</div>", unsafe_allow_html=True)
     st.balloons()
     
 # Footer
