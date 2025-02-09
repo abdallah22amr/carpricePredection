@@ -41,20 +41,20 @@ st.markdown(
     """
     <style>
     body {
-        background-color: #ffcccc !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     }
     h1 {
         color: #333333 !important;
         text-align: center !important;
+    }
+    [data-testid="stAppViewContainer"] {
+        background-color: #ffcccc !important;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-st.title("Used Car Price Predictor")
-st.image("carwow-shutterstock_2356848413.jpg")
-st.write("This is a test to see if the custom styling applies.")
 
 
 # -------------------------------
