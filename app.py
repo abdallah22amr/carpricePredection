@@ -41,12 +41,11 @@ st.markdown(
     """
     <style>
     body {
-        background-color: #f4f6f9;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #ffcccc !important;
     }
     h1 {
-        text-align: center;
-        color: #333333;
+        color: #333333 !important;
+        text-align: center !important;
     }
     </style>
     """,
