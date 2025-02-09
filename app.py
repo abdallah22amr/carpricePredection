@@ -40,21 +40,57 @@ scaler = load_scaler()
 st.markdown(
     """
     <style>
+    /* Import Google Font */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+    
+    /* Set body styles */
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        font-family: 'Roboto', sans-serif !important;
+        background: linear-gradient(135deg, #f4f6f9, #ffffff) !important;
     }
+    
+    /* Main container padding */
+    .css-18e3th9 {
+        padding: 2rem 1rem;
+    }
+    
+    /* Header style */
     h1 {
+        text-align: center;
         color: #333333 !important;
-        text-align: center !important;
     }
-    [data-testid="stAppViewContainer"] {
-        background-color: #ffcccc !important;
+    
+    /* Modern button style */
+    .stButton>button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background-color: #ffffff !important;
+        border-right: 2px solid #e0e0e0;
+    }
+    
+    /* Footer style */
+    .footer {
+        text-align: center;
+        color: #666;
+        padding: 1rem 0;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
 
+# App title and header image
+st.title("Used Car Price Predictor")
+st.image("carwow-shutterstock_2356848413.jpg", use_column_width=True)
 
 
 # -------------------------------
