@@ -39,7 +39,7 @@ scaler = load_scaler()
 # App Title and Image
 # -------------------------------
 st.title("Used Car Price Predictor")
-st.image("carwow-shutterstock_2356848413.jpg")
+st.background_image("carwow-shutterstock_2356848413.jpg")
 
 # -------------------------------
 # Create Dropdown Mappings from Original Data
@@ -103,8 +103,8 @@ numerical_columns = ["power_kw", "power_ps", "fuel_consumption_l_100km.1", "mile
 input_df[numerical_columns] = scaler.transform(input_df[numerical_columns])
 
 # (Optional) Display the processed input for debugging
-st.write("Processed Input Data:")
-st.write(input_df)
+# st.write("Processed Input Data:")
+# st.write(input_df)
 
 # -------------------------------
 # Prediction
