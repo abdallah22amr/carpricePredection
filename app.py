@@ -39,16 +39,17 @@ mileage = st.sidebar.number_input("Mileage (km)", min_value=0, value=50000)
 vehicle_age = st.sidebar.number_input("Vehicle Age (years)", min_value=0, value=5)
 
 # Create input DataFrame
-input_df = pd.DataFrame([{
+input_data = {
+    "power_kw": power_ps * 0.7355,
+    "mileage_in_km": mileage,
+    "vehicle_age": vehicle_age,
     "brand": brands.index(brand),
     "model": models.index(model_name),
     "color": colors.index(color),
     "transmission_type": transmissions.index(transmission),
-    "fuel_type": fuel_types.index(fuel_type),
-    "power_ps": power_ps,
-    "mileage_in_km": mileage,
-    "vehicle_age": vehicle_age
-}])
+    "fuel_type": fuel_types.index(fuel_type)
+}
+input_df = pd.DataFrame([input_data])
 
 # Prediction
 if st.sidebar.button("Predict Price"):
