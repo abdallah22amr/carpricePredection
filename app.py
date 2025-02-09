@@ -195,7 +195,7 @@ with st.container():
     col2_html += "</div>"
     
     # Create two columns in Streamlit and render the HTML in each column
-    col1, col2 = st.columns(3)
+    col1, col2 = st.columns(2)
     with col1:
         st.markdown(col1_html, unsafe_allow_html=True)
     with col2:
