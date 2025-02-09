@@ -168,14 +168,20 @@ with st.container():
     st.markdown("<div class='input-container'>", unsafe_allow_html=True)
     st.markdown("<h4>Car Specifications</h4>", unsafe_allow_html=True)
     
-    # Get the key-value pairs from the first (and only) row of input_df
-    input_items = list(raw_input.iloc[0].items())
+    # Get the key-value pairs from the first (and only) row of input_df    
+    input_items = list(input_df.iloc[0].items())
     
-    # Calculate the splitting index to divide items into two columns
-    mid_index = (len(input_items) + 1) // 2  # ensures the first column gets the extra item if odd number
+    n = len(input_items)
+    base = n // 3
+    r = n % 3
     
-    col1_items = input_items[:mid_index]
-    col2_items = input_items[mid_index:]
+    # Calculate the two split indices
+    i1 = base + (1 if r > 0 else 0)
+    i2 = i1 + base + (1 if r > 1 else 0)
+    
+    col1_items = input_items[:i1]
+    col2_items = input_items[i1:i2]
+    col3_items = input_items[i2:]
     
     # Build HTML for the first column
     col1_html = "<div style='font-size:16px; line-height:1.8;'>"
@@ -191,6 +197,13 @@ with st.container():
         key_formatted = key.replace("_", " ").title()
         col2_html += f"<p><strong>{key_formatted}:</strong> {value}</p>"
     col2_html += "</div>"
+
+    # Build HTML for the second column
+    col3_html = "<div style='font-size:16px; line-height:1.8;'>"
+    for key, value in col3_items:
+        key_formatted = key.replace("_", " ").title()
+        col2_html += f"<p><strong>{key_formatted}:</strong> {value}</p>"
+    col3_html += "</div>"
     
     # Create two columns in Streamlit and render the HTML in each column
     col1, col2 ,col3 = st.columns(3)
