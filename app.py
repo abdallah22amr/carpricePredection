@@ -167,7 +167,16 @@ input_df[numerical_columns] = scaler.transform(input_df[numerical_columns])
 with st.container():
     st.markdown("<div class='input-container'>", unsafe_allow_html=True)
     st.markdown("<h4>Car Specifications</h4>", unsafe_allow_html=True)
-    st.dataframe(raw_input, use_container_width=True)
+    
+    # Build a custom HTML string for the summary
+    summary_html = "<div style='font-size:16px; line-height:1.8;'>"
+    for col, value in input_df.iloc[0].items():
+        # Format the column name (e.g., replace underscores and capitalize)
+        col_name = col.replace("_", " ").title()
+        summary_html += f"<p><strong>{col_name}:</strong> {value}</p>"
+    summary_html += "</div>"
+    
+    st.markdown(summary_html, unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Prediction
