@@ -55,6 +55,7 @@ st.markdown(
 
 st.title("Used Car Price Predictor")
 st.image("carwow-shutterstock_2356848413.jpg")
+st.write("This is a test to see if the custom styling applies.")
 
 
 # -------------------------------
