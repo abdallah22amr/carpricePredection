@@ -22,9 +22,7 @@ def load_expected_columns():
 def load_scaler():
     return joblib.load("scaler.pkl")
 
-# -------------------------------
 # Load Data, Model, and Preprocessing Artifacts
-# -------------------------------
 data = load_data()
 model = load_model()
 expected_columns = load_expected_columns()
@@ -176,12 +174,10 @@ with st.container():
     r = n % 3
     
     # Calculate the two split indices
-    i1 = base + (1 if r > 0 else 0)
-    i2 = i1 + base + (1 if r > 1 else 0)
+    mid_index = (len(input_items) + 1) // 2
     
-    col1_items = input_items[:i1]
-    col2_items = input_items[i1:i2]
-    col3_items = input_items[i2:]
+    col1_items = input_items[:mid_index]
+    col2_items = input_items[mid_index:]
     
     # Build HTML for the first column
     col1_html = "<div style='font-size:16px; line-height:1.8;'>"
@@ -197,21 +193,12 @@ with st.container():
         key_formatted = key.replace("_", " ").title()
         col2_html += f"<p><strong>{key_formatted}:</strong> {value}</p>"
     col2_html += "</div>"
-
-    # Build HTML for the second column
-    col3_html = "<div style='font-size:16px; line-height:1.8;'>"
-    for key, value in col3_items:
-        key_formatted = key.replace("_", " ").title()
-        col2_html += f"<p><strong>{key_formatted}:</strong> {value}</p>"
-    col3_html += "</div>"
     
     # Create two columns in Streamlit and render the HTML in each column
-    col1, col2 ,col3 = st.columns(3)
+    col1, col2 = st.columns(3)
     with col1:
         st.markdown(col1_html, unsafe_allow_html=True)
     with col2:
-        st.markdown(col2_html, unsafe_allow_html=True)
-    with col3:
         st.markdown(col2_html, unsafe_allow_html=True)
     
     st.markdown("</div>", unsafe_allow_html=True)
