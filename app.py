@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 from catboost import CatBoostRegressor
-
+use_column_width
 # -------------------------------
 # Cached Functions to Load Artifacts
 # -------------------------------
