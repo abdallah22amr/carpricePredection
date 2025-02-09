@@ -4,7 +4,7 @@ import joblib
 from catboost import CatBoostRegressor
 
 # -------------------------------
-# Caching functions to load artifacts
+# Cached Functions to Load Artifacts
 # -------------------------------
 @st.cache_resource
 def load_data():
@@ -19,34 +19,41 @@ def load_model():
 
 @st.cache_resource
 def load_expected_columns():
-    # expected_columns.pkl should contain the list of feature names after get_dummies
+    # expected_columns.pkl contains the list of feature names from training (after get_dummies)
     return joblib.load("expected_columns.pkl")
 
 @st.cache_resource
 def load_scaler():
-    # scaler.pkl is the fitted StandardScaler used on numerical features during training
+    # scaler.pkl is the fitted StandardScaler from training
     return joblib.load("scaler.pkl")
 
-# Load data, model, and preprocessing artifacts
+# -------------------------------
+# Load Data, Model, and Preprocessing Artifacts
+# -------------------------------
 data = load_data()
 model = load_model()
 expected_columns = load_expected_columns()
 scaler = load_scaler()
 
+# -------------------------------
 # App Title and Image
+# -------------------------------
 st.title("Used Car Price Predictor")
 st.image("carwow-shutterstock_2356848413.jpg")
 
-# Create mappings for dropdown selections from the original data
+# -------------------------------
+# Create Dropdown Mappings from Original Data
+# -------------------------------
 brands = data["brand"].unique().tolist()
 models_list = data["model"].unique().tolist()  # renamed to avoid conflict with model variable
 colors = data["color"].unique().tolist()
 transmissions = data["transmission_type"].unique().tolist()
 fuel_types = data["fuel_type"].unique().tolist()
 
+# -------------------------------
 # Sidebar Inputs
+# -------------------------------
 st.sidebar.header("Car Specifications")
-
 brand_input = st.sidebar.selectbox("Brand", brands)
 model_input = st.sidebar.selectbox("Model", models_list)
 color_input = st.sidebar.selectbox("Color", colors)
@@ -56,13 +63,17 @@ power_ps = st.sidebar.number_input("Power (PS)", min_value=50, value=150)
 power_kw = st.sidebar.number_input("Power (KW)", min_value=50 * 0.7355, value=150 * 0.7355)
 mileage = st.sidebar.number_input("Mileage (km)", min_value=0, value=50000)
 vehicle_age = st.sidebar.number_input("Vehicle Age (years)", min_value=0, value=5)
+# Added missing input for fuel consumption
+fuel_consumption = st.sidebar.number_input("Fuel Consumption (L/100km)", min_value=0.0, value=8.0)
 
-# Create a Raw Input DataFrame
 # -------------------------------
-# Note: During training, your raw data had these columns (with categorical variables as strings).
+# Create Raw Input DataFrame
+# -------------------------------
+# The keys here should match the column names in your training data prior to one-hot encoding.
 raw_input = pd.DataFrame([{
     "power_kw": power_kw,
     "power_ps": power_ps,
+    "fuel_consumption_l_100km.1": fuel_consumption,
     "mileage_in_km": mileage,
     "vehicle_age": vehicle_age,
     "brand": brand_input,
@@ -72,24 +83,32 @@ raw_input = pd.DataFrame([{
     "fuel_type": fuel_type_input
 }])
 
+# -------------------------------
 # Preprocessing: One-Hot Encoding for Categorical Features
+# -------------------------------
 categorical_columns = ["brand", "model", "color", "transmission_type", "fuel_type"]
 input_dummies = pd.get_dummies(raw_input, columns=categorical_columns, drop_first=True)
 
-# Align Input DataFrame to the Expected Columns
 # -------------------------------
-# Reindex to match the training features (fill missing columns with 0)
+# Align Input Data with Expected Feature Columns
+# -------------------------------
+# Reindex the DataFrame to match the exact order and names from training.
 input_df = input_dummies.reindex(columns=expected_columns, fill_value=0)
 
+# -------------------------------
 # Scale Numerical Features
-numerical_columns = ["power_kw", "power_ps", "mileage_in_km", "vehicle_age"]
+# -------------------------------
+# List of numerical features as used during training.
+numerical_columns = ["power_kw", "power_ps", "fuel_consumption_l_100km.1", "mileage_in_km", "vehicle_age"]
 input_df[numerical_columns] = scaler.transform(input_df[numerical_columns])
 
 # (Optional) Display the processed input for debugging
 st.write("Processed Input Data:")
 st.write(input_df)
 
+# -------------------------------
 # Prediction
+# -------------------------------
 if st.sidebar.button("Predict Price"):
     prediction = model.predict(input_df)[0]
     st.subheader(f"Predicted Value: ${prediction:,.2f}")
