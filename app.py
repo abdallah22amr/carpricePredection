@@ -40,7 +40,8 @@ vehicle_age = st.sidebar.number_input("Vehicle Age (years)", min_value=0, value=
 
 # Create input DataFrame
 input_data = {
-    "power_kw": power_ps * 0.7355,
+    "power_kw": power_kw,
+    "power_ps": power_ps,
     "mileage_in_km": mileage,
     "vehicle_age": vehicle_age,
     "brand": brands.index(brand),
@@ -50,6 +51,7 @@ input_data = {
     "fuel_type": fuel_types.index(fuel_type)
 }
 input_df = pd.DataFrame([input_data])
+input_df = input_df[["power_kw", "power_ps", "mileage_in_km", "vehicle_age", "brand", "model", "color", "transmission_type", "fuel_type"]]
 
 # Prediction
 if st.sidebar.button("Predict Price"):
