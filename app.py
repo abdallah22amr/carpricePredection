@@ -46,66 +46,58 @@ st.markdown(
     /* Global styles */
     body {
         font-family: 'Inter', sans-serif;
-        background-color: #1e1e1e !important;
+        background: linear-gradient(135deg, #1e1e1e, #2e2e2e) !important;
         color: #e0e0e0 !important;
     }
-
-    /* Sidebar styling */
+    .css-18e3th9 {
+        padding: 2rem 1rem !important;
+    }
+    /* Sidebar styles */
     [data-testid="stSidebar"] {
-        background-color: #151515 !important;
-        padding: 20px;
-        border-right: 2px solid #333;
+        background-color: #121212 !important;
+        border-right: 1px solid #333;
+        padding: 1rem;
     }
-
-    /* Sidebar input fields */
-    .stSelectbox, .stNumberInput {
-        border-radius: 10px !important;
-        border: 1px solid #555 !important;
-        background-color: #222 !important;
-        color: #fff !important;
-        padding: 10px !important;
+    /* Customizing input fields in sidebar */
+    .stSelectbox, .stNumberInput, .stTextInput {
+        border-radius: 8px !important;
+        background-color: #2e2e2e !important;
+        border: 1px solid #444 !important;
+        color: #e0e0e0 !important;
+        padding: 10px;
     }
-
-    /* Header styling */
-    h1 {
-        text-align: center;
-        color: #ffffff !important;
-        font-weight: 700;
-    }
-
-    /* Image Styling */
-    img {
-        border-radius: 10px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Modern Predict Button */
+    /* Modern button styling */
     .stButton>button {
-        background: linear-gradient(135deg, #4CAF50, #45A049);
-        color: white;
-        font-weight: bold;
-        padding: 12px 20px;
-        border-radius: 8px;
-        font-size: 16px;
-        transition: 0.3s;
-        border: none;
-        cursor: pointer;
+        background: linear-gradient(135deg, #4CAF50, #45A049) !important;
+        color: white !important;
+        font-weight: bold !important;
+        padding: 12px 24px !important;
+        border-radius: 8px !important;
+        font-size: 16px !important;
+        transition: transform 0.3s ease;
+        border: none !important;
+        cursor: pointer !important;
     }
     .stButton>button:hover {
-        background: linear-gradient(135deg, #45A049, #4CAF50);
         transform: scale(1.05);
     }
-
-    /* Prediction Result */
+    /* Prediction card styling */
     .prediction-card {
-        background-color: #222;
-        border-radius: 10px;
-        padding: 20px;
+        background: #222;
+        border-radius: 12px;
+        padding: 30px;
         text-align: center;
-        font-size: 24px;
-        font-weight: bold;
+        font-size: 28px;
+        font-weight: 600;
         color: #4CAF50;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        margin-top: 20px;
+    }
+    /* Image styling */
+    .header-image {
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        margin-bottom: 20px;
     }
     </style>
     """,
