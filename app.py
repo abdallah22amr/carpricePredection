@@ -168,15 +168,37 @@ with st.container():
     st.markdown("<div class='input-container'>", unsafe_allow_html=True)
     st.markdown("<h4>Car Specifications</h4>", unsafe_allow_html=True)
     
-    # Build a custom HTML string for the summary
-    summary_html = "<div style='font-size:16px; line-height:1.8;'>"
-    for col, value in input_df.iloc[0].items():
-        # Format the column name (e.g., replace underscores and capitalize)
-        col_name = col.replace("_", " ").title()
-        summary_html += f"<p><strong>{col_name}:</strong> {value}</p>"
-    summary_html += "</div>"
+    # Get the key-value pairs from the first (and only) row of input_df
+    input_items = list(raw_input.iloc[0].items())
     
-    st.markdown(summary_html, unsafe_allow_html=True)
+    # Calculate the splitting index to divide items into two columns
+    mid_index = (len(input_items) + 1) // 2  # ensures the first column gets the extra item if odd number
+    
+    col1_items = input_items[:mid_index]
+    col2_items = input_items[mid_index:]
+    
+    # Build HTML for the first column
+    col1_html = "<div style='font-size:16px; line-height:1.8;'>"
+    for key, value in col1_items:
+        # Format the key (replace underscores and capitalize)
+        key_formatted = key.replace("_", " ").title()
+        col1_html += f"<p><strong>{key_formatted}:</strong> {value}</p>"
+    col1_html += "</div>"
+    
+    # Build HTML for the second column
+    col2_html = "<div style='font-size:16px; line-height:1.8;'>"
+    for key, value in col2_items:
+        key_formatted = key.replace("_", " ").title()
+        col2_html += f"<p><strong>{key_formatted}:</strong> {value}</p>"
+    col2_html += "</div>"
+    
+    # Create two columns in Streamlit and render the HTML in each column
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown(col1_html, unsafe_allow_html=True)
+    with col2:
+        st.markdown(col2_html, unsafe_allow_html=True)
+    
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Prediction
