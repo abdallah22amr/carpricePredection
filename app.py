@@ -41,47 +41,71 @@ st.markdown(
     """
     <style>
     /* Import Google Font */
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-    
-    /* Set body styles */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    /* Global styles */
     body {
-        font-family: 'Roboto', sans-serif !important;
-        background: linear-gradient(135deg, #f4f6f9, #ffffff) !important;
+        font-family: 'Inter', sans-serif;
+        background-color: #1e1e1e !important;
+        color: #e0e0e0 !important;
     }
-    
-    /* Main container padding */
-    .css-18e3th9 {
-        padding: 2rem 1rem;
-    }
-    
-    /* Header style */
-    h1 {
-        text-align: center;
-        color: #333333 !important;
-    }
-    
-    /* Modern button style */
-    .stButton>button {
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 600;
-    }
-    
+
     /* Sidebar styling */
     [data-testid="stSidebar"] {
-        background-color: #ffffff !important;
-        border-right: 2px solid #e0e0e0;
+        background-color: #151515 !important;
+        padding: 20px;
+        border-right: 2px solid #333;
     }
-    
-    /* Footer style */
-    .footer {
+
+    /* Sidebar input fields */
+    .stSelectbox, .stNumberInput {
+        border-radius: 10px !important;
+        border: 1px solid #555 !important;
+        background-color: #222 !important;
+        color: #fff !important;
+        padding: 10px !important;
+    }
+
+    /* Header styling */
+    h1 {
         text-align: center;
-        color: #666;
-        padding: 1rem 0;
+        color: #ffffff !important;
+        font-weight: 700;
+    }
+
+    /* Image Styling */
+    img {
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Modern Predict Button */
+    .stButton>button {
+        background: linear-gradient(135deg, #4CAF50, #45A049);
+        color: white;
+        font-weight: bold;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: 0.3s;
+        border: none;
+        cursor: pointer;
+    }
+    .stButton>button:hover {
+        background: linear-gradient(135deg, #45A049, #4CAF50);
+        transform: scale(1.05);
+    }
+
+    /* Prediction Result */
+    .prediction-card {
+        background-color: #222;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #4CAF50;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     }
     </style>
     """,
