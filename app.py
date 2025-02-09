@@ -122,21 +122,7 @@ colors = data["color"].unique().tolist()
 transmissions = data["transmission_type"].unique().tolist()
 fuel_types = data["fuel_type"].unique().tolist()
 
-# Use columns for a cleaner layout
-col1, col2, col3 = st.columns(3)
 
-with col1:
-    brand = st.selectbox("Brand", brands)
-    model_input = st.selectbox("Model", models_list)
-    color = st.selectbox("Color", colors)
-with col2:
-    transmission = st.selectbox("Transmission", transmissions)
-    fuel_type = st.selectbox("Fuel Type", fuel_types)
-    power_ps = st.number_input("Power (PS)", min_value=50, value=150)
-with col3:
-    power_kw = st.number_input("Power (KW)", min_value=50 * 0.7355, value=150 * 0.7355)
-    mileage = st.number_input("Mileage (km)", min_value=0, value=50000)
-    vehicle_age = st.number_input("Vehicle Age (years)", min_value=0, value=5)
 
 # Sidebar Inputs
 st.sidebar.header("Car Specifications")
