@@ -3,6 +3,9 @@ import pandas as pd
 import joblib
 from catboost import CatBoostRegressor
 
+# -------------------------------------------
+# Caching Functions to Load Data, Model, and Artifacts
+# -------------------------------------------
 @st.cache_resource
 def load_data():
     data = pd.read_csv("Cars_Data.csv")
@@ -22,14 +25,15 @@ def load_expected_columns():
 def load_scaler():
     return joblib.load("scaler.pkl")
 
-# Load Data, Model, and Preprocessing Artifacts
+# Load artifacts
 data = load_data()
 model = load_model()
 expected_columns = load_expected_columns()
 scaler = load_scaler()
 
-
-# Custom CSS injection
+# -------------------------------------------
+# Custom CSS Injection for a Modern Look
+# -------------------------------------------
 st.markdown(
     """
     <style>
@@ -104,22 +108,24 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# App title and header image
+# -------------------------------------------
+# App Title and Header Image
+# -------------------------------------------
 st.title("Used Car Price Predictor")
 st.image("carwow-shutterstock_2356848413.jpg", use_container_width=True)
 
-
-
+# -------------------------------------------
 # Create Dropdown Mappings from Original Data
+# -------------------------------------------
 brands = data["brand"].unique().tolist()
-models_list = data["model"].unique().tolist()  # renamed to avoid conflict with model variable
+models_list = data["model"].unique().tolist()  # Renamed to avoid conflict with 'model'
 colors = data["color"].unique().tolist()
 transmissions = data["transmission_type"].unique().tolist()
 fuel_types = data["fuel_type"].unique().tolist()
 
-
-
-# Sidebar Inputs
+# -------------------------------------------
+# Sidebar Inputs for Car Specifications
+# -------------------------------------------
 st.sidebar.header("Car Specifications")
 brand_input = st.sidebar.selectbox("Brand", brands)
 model_input = st.sidebar.selectbox("Model", models_list)
@@ -132,7 +138,9 @@ mileage = st.sidebar.number_input("Mileage (km)", min_value=0, value=50000)
 vehicle_age = st.sidebar.number_input("Vehicle Age (years)", min_value=0, value=5)
 fuel_consumption = st.sidebar.number_input("Fuel Consumption (L/100km)", min_value=0.0, value=8.0)
 
+# -------------------------------------------
 # Create Raw Input DataFrame
+# -------------------------------------------
 raw_input = pd.DataFrame([{
     "power_kw": power_kw,
     "power_ps": power_ps,
@@ -146,68 +154,69 @@ raw_input = pd.DataFrame([{
     "fuel_type": fuel_type_input
 }])
 
-# Preprocessing: One-Hot Encoding for Categorical Features
+# -------------------------------------------
+# Preprocessing: One-Hot Encoding & Scaling
+# -------------------------------------------
 categorical_columns = ["brand", "model", "color", "transmission_type", "fuel_type"]
 input_dummies = pd.get_dummies(raw_input, columns=categorical_columns, drop_first=True)
-
-# Reindex the DataFrame to match the exact order and names from training.
+# Reindex to match training features
 input_df = input_dummies.reindex(columns=expected_columns, fill_value=0)
-
-# Scale Numerical Features
+# Scale numerical features
 numerical_columns = ["power_kw", "power_ps", "fuel_consumption_l_100km.1", "mileage_in_km", "vehicle_age"]
 input_df[numerical_columns] = scaler.transform(input_df[numerical_columns])
 
-# (Optional) Display the processed input for debugging
-# st.write("Processed Input Data:")
-# st.write(input_df)
-
-# Display input summary in a container
+# -------------------------------------------
+# Display Input Summary in a Container (Three Columns)
+# -------------------------------------------
 with st.container():
     st.markdown("<div class='input-container'>", unsafe_allow_html=True)
     st.markdown("<h4>Car Specifications</h4>", unsafe_allow_html=True)
     
-    # Get the key-value pairs from the first (and only) row of input_df    
+    # Use raw_input for display (preserving original text values)
     input_items = list(raw_input.iloc[0].items())
     
+    # Calculate splitting indices to divide items into three columns evenly
     n = len(input_items)
     base = n // 3
     r = n % 3
+    i1 = base + (1 if r > 0 else 0)
+    i2 = i1 + base + (1 if r > 1 else 0)
     
-    # Calculate the two split indices
-    mid_index = (len(input_items) + 1) // 2
+    col1_items = input_items[:i1]
+    col2_items = input_items[i1:i2]
+    col3_items = input_items[i2:]
     
-    col1_items = input_items[:mid_index]
-    col2_items = input_items[mid_index:]
+    def build_column_html(items):
+        html = "<div style='font-size:16px; line-height:1.8;'>"
+        for key, value in items:
+            key_formatted = key.replace("_", " ").title()
+            html += f"<p><strong>{key_formatted}:</strong> {value}</p>"
+        html += "</div>"
+        return html
     
-    # Build HTML for the first column
-    col1_html = "<div style='font-size:16px; line-height:1.8;'>"
-    for key, value in col1_items:
-        # Format the key (replace underscores and capitalize)
-        key_formatted = key.replace("_", " ").title()
-        col1_html += f"<p><strong>{key_formatted}:</strong> {value}</p>"
-    col1_html += "</div>"
+    col1_html = build_column_html(col1_items)
+    col2_html = build_column_html(col2_items)
+    col3_html = build_column_html(col3_items)
     
-    # Build HTML for the second column
-    col2_html = "<div style='font-size:16px; line-height:1.8;'>"
-    for key, value in col2_items:
-        key_formatted = key.replace("_", " ").title()
-        col2_html += f"<p><strong>{key_formatted}:</strong> {value}</p>"
-    col2_html += "</div>"
-    
-    # Create two columns in Streamlit and render the HTML in each column
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown(col1_html, unsafe_allow_html=True)
     with col2:
         st.markdown(col2_html, unsafe_allow_html=True)
+    with col3:
+        st.markdown(col3_html, unsafe_allow_html=True)
     
     st.markdown("</div>", unsafe_allow_html=True)
 
+# -------------------------------------------
 # Prediction
+# -------------------------------------------
 if st.sidebar.button("Predict Price"):
     prediction = model.predict(input_df)[0]
     st.subheader(f"Predicted Value: ${prediction:,.2f}")
     st.balloons()
-    
+
+# -------------------------------------------
 # Footer
+# -------------------------------------------
 st.markdown("<div class='footer'>Modern Car Price Predictor App © 2025</div>", unsafe_allow_html=True)
