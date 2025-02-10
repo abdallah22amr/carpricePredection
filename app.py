@@ -30,61 +30,62 @@ scaler = load_scaler()
 # Custom CSS Injection
 st.markdown(
     """
+    <style>
+    /* Global Background Image */
+    [data-testid="stAppViewContainer"] {
+         background: url('https://your-image-url.com/background.jpg') no-repeat center center fixed !important;
+         background-size: cover !important;
+    }
+
+    /* Global Styles */
+    body {
+         font-family: 'Inter', sans-serif;
+         color: #e0e0e0 !important;
+    }
+
     /* Container for input fields */
     .input-container {
-        background: #121212;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
+         background: #121212;
+         padding: 20px;
+         border-radius: 10px;
+         margin-bottom: 20px;
     }
+
     /* Modern button styling */
     .stButton>button {
-        background: linear-gradient(135deg, #4CAF50, #45A049) !important;
-        color: white !important;
-        font-weight: bold !important;
-        padding: 12px 24px !important;
-        border-radius: 8px !important;
-        font-size: 16px !important;
-        transition: transform 0.3s ease;
-        border: none !important;
-        cursor: pointer !important;
+         background: linear-gradient(135deg, #4CAF50, #45A049) !important;
+         color: white !important;
+         font-weight: bold !important;
+         padding: 12px 24px !important;
+         border-radius: 8px !important;
+         font-size: 16px !important;
+         transition: transform 0.3s ease;
+         border: none !important;
+         cursor: pointer !important;
     }
     .stButton>button:hover {
-        transform: scale(1.05);
+         transform: scale(1.05);
     }
+
     /* Prediction card styling */
     .prediction-card {
-        background: #222;
-        border-radius: 12px;
-        padding: 30px;
-        text-align: center;
-        font-size: 28px;
-        font-weight: 600;
-        color: #4CAF50;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-        margin-top: 20px;
+         background: #222;
+         border-radius: 12px;
+         padding: 30px;
+         text-align: center;
+         font-size: 28px;
+         font-weight: 600;
+         color: #4CAF50;
+         box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+         margin-top: 20px;
     }
+
     /* Footer styling */
     .footer {
-        text-align: center;
-        color: #777;
-        margin-top: 40px;
-        font-size: 14px;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    """
-    <style>
-    [data-testid="stAppViewContainer"] {
-         background: url('https://your-image-url.com/image.jpg') no-repeat center center fixed !important;
-         background-size: cover !important;
-         background-position: center !important;
-         background-repeat: no-repeat !important;
-         background-attachment: fixed !important;
+         text-align: center;
+         color: #777;
+         margin-top: 40px;
+         font-size: 14px;
     }
     </style>
     """,
