@@ -32,7 +32,7 @@ st.markdown(
     """
     <style>
     .stApp {
-     background: url('https://www.motorfinanceonline.com/wp-content/uploads/sites/6/2025/01/carwow-shutterstock_2356848413.jpg/image.jpg');
+     background: url('https://media.licdn.com/dms/image/v2/D4D12AQHwUy4ckMgtdQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1671439273569?e=1744848000&v=beta&t=AMmGJG_cWN5OMyoNLs0dF4o4e2L-hTqP9idEZNwhaLs/image.jpg') !important;
      background-size: cover;
      background-position: center;
      background-repeat: no-repeat;
