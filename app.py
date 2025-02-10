@@ -27,21 +27,24 @@ model = load_model()
 expected_columns = load_expected_columns()
 scaler = load_scaler()
 
-# Custom CSS Injection (Background, Dimming Overlay, Global Styles, and Modified Button & Prediction Card)
+# Custom CSS Injection (All rules end with !important)
 st.markdown(
     """
     <style>
+    html { 
+         color-scheme: dark !important;
+    }
     /* Global Background Image - target both selectors */
     [data-testid="stAppViewContainer"], .stApp {
          background: url('https://www.motorfinanceonline.com/wp-content/uploads/sites/6/2025/01/carwow-shutterstock_2356848413.jpg') no-repeat center center fixed !important;
          background-size: cover !important;
-         position: relative;
-         z-index: 0;
+         position: relative !important;
+         z-index: 0 !important;
     }
     /* Dim the background by adding an overlay */
     [data-testid="stAppViewContainer"]::before {
-         content: "";
-         position: absolute;
+         content: "" !important;
+         position: absolute !important;
          top: 0 !important;
          left: 0 !important;
          right: 0 !important;
@@ -53,7 +56,6 @@ st.markdown(
     body {
          font-family: 'Inter', sans-serif !important;
          color: #e0e0e0 !important;
-         color-scheme: dark !important;
     }
     /* Container for input fields */
     .input-container {
@@ -74,12 +76,12 @@ st.markdown(
          padding: 12px 24px !important;
          border-radius: 8px !important;
          font-size: 16px !important;
-         transition: transform 0.3s ease;
+         transition: transform 0.3s ease !important;
          border: none !important;
          cursor: pointer !important;
     }
     .stButton>button:hover {
-         transform: scale(1.05);
+         transform: scale(1.05) !important;
     }
     /* Prediction card styling with increased shadow */
     .prediction-card {
@@ -100,12 +102,27 @@ st.markdown(
          margin-top: 40px !important;
          font-size: 14px !important;
     }
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+         background: rgba(0, 0, 0, 0.7) !important;
+         color: white !important;
+    }
+    /* Sidebar toggle arrow styling */
+    [data-testid="stSidebarNav"] {
+         display: block !important;
+         background: #121212 !important;
+         border: none !important;
+    }
+    [data-testid="stSidebarNav"] svg {
+         fill: #e0e0e0 !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
 )
 
 st.title("Used Car Price Predictor")
+st.image("carwow-shutterstock_2356848413.jpg", use_container_width=True)
 
 # Input Fields in Main Area
 st.markdown("### Enter Car Specifications")
@@ -123,7 +140,6 @@ with col2:
     vehicle_age = st.number_input("Vehicle Age (years)", min_value=0, value=5)
     fuel_consumption = st.number_input("Fuel Consumption (L/100km)", min_value=0.0, value=8.0)
 
-# Raw Input DataFrame
 raw_input = pd.DataFrame([{
     "power_kw": power_kw,
     "power_ps": power_ps,
@@ -137,16 +153,13 @@ raw_input = pd.DataFrame([{
     "fuel_type": fuel_type_input
 }])
 
-# One-Hot Encoding for Categorical Features
 categorical_columns = ["brand", "model", "color", "transmission_type", "fuel_type"]
 input_dummies = pd.get_dummies(raw_input, columns=categorical_columns, drop_first=True)
 input_df = input_dummies.reindex(columns=expected_columns, fill_value=0)
 
-# Scale numerical features
 numerical_columns = ["power_kw", "power_ps", "fuel_consumption_l_100km.1", "mileage_in_km", "vehicle_age"]
 input_df[numerical_columns] = scaler.transform(input_df[numerical_columns])
 
-# Sidebar: Read-Only Car Specifications Summary
 with st.sidebar:
     st.markdown("## Car Specifications Summary")
     spec_summary = {
@@ -164,11 +177,9 @@ with st.sidebar:
     for key, value in spec_summary.items():
         st.write(f"**{key}:** {value}")
 
-# Prediction: Using a styled prediction card
 if st.button("Predict Price"):
     prediction = model.predict(input_df)[0]
     st.markdown(f"<div class='prediction-card'>Predicted Value: ${prediction:,.2f}</div>", unsafe_allow_html=True)
     st.balloons()
 
-# Footer
 st.markdown("<div class='footer'>Modern Car Price Predictor App © 2025</div>", unsafe_allow_html=True)
