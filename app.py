@@ -51,16 +51,12 @@ st.markdown(
     [data-testid="stAppViewContainer"] h1,
     [data-testid="stAppViewContainer"] h3,
     [data-testid="stAppViewContainer"] p {
-         color: #ffffff !important;
+         color: #e0e0e0 !important;
+         color-scheme: dark !important;
          font-family: 'Inter', sans-serif !important;
          /* Add any additional styles here */
     }
     
-    body {
-         font-family: 'Inter', sans-serif !important;
-         color: #e0e0e0 !important;
-         color-scheme: dark !important;
-    }
     .input-container {
          background: #121212 !important;
          padding: 20px !important;
