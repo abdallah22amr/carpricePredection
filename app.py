@@ -3,9 +3,9 @@ import pandas as pd
 import joblib
 from catboost import CatBoostRegressor
 
-# -------------------------------------------
-# Caching Functions to Load Data, Model, and Artifacts
-# -------------------------------------------
+# ----------------------------------------------------
+# Cached Functions to Load Data, Model, and Artifacts
+# ----------------------------------------------------
 @st.cache_resource
 def load_data():
     data = pd.read_csv("Cars_Data.csv")
@@ -31,9 +31,9 @@ model = load_model()
 expected_columns = load_expected_columns()
 scaler = load_scaler()
 
-# -------------------------------------------
+# ----------------------------------------------------
 # Custom CSS Injection for a Modern Look
-# -------------------------------------------
+# ----------------------------------------------------
 st.markdown(
     """
     <style>
@@ -46,22 +46,12 @@ st.markdown(
         background: linear-gradient(135deg, #1e1e1e, #2e2e2e) !important;
         color: #e0e0e0 !important;
     }
-    .main-container {
-        padding: 2rem 1rem;
-    }
     /* Container for input fields */
     .input-container {
         background: #121212;
         padding: 20px;
         border-radius: 10px;
         margin-bottom: 20px;
-    }
-    /* Input widget styling */
-    .stSelectbox, .stNumberInput, .stTextInput {
-        border-radius: 8px !important;
-        background-color: #2e2e2e !important;
-        border: 1px solid #444 !important;
-        color: #e0e0e0 !important;
     }
     /* Modern button styling */
     .stButton>button {
@@ -90,12 +80,6 @@ st.markdown(
         box-shadow: 0 8px 16px rgba(0,0,0,0.3);
         margin-top: 20px;
     }
-    /* Image styling */
-    .header-image {
-        border-radius: 12px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-        margin-bottom: 20px;
-    }
     /* Footer styling */
     .footer {
         text-align: center;
@@ -108,39 +92,34 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# -------------------------------------------
+# ----------------------------------------------------
 # App Title and Header Image
-# -------------------------------------------
+# ----------------------------------------------------
 st.title("Used Car Price Predictor")
 st.image("carwow-shutterstock_2356848413.jpg", use_container_width=True)
 
-# -------------------------------------------
-# Create Dropdown Mappings from Original Data
-# -------------------------------------------
-brands = data["brand"].unique().tolist()
-models_list = data["model"].unique().tolist()  # Renamed to avoid conflict with 'model'
-colors = data["color"].unique().tolist()
-transmissions = data["transmission_type"].unique().tolist()
-fuel_types = data["fuel_type"].unique().tolist()
+# ----------------------------------------------------
+# Main Area: Input Fields (Not in the Sidebar)
+# ----------------------------------------------------
+st.markdown("### Enter Car Specifications")
+col1, col2 = st.columns(2)
+with col1:
+    # Use the original lists from your data if needed; here we load them from the CSV.
+    brand_input = st.selectbox("Brand", data["brand"].unique().tolist())
+    model_input = st.selectbox("Model", data["model"].unique().tolist())
+    color_input = st.selectbox("Color", data["color"].unique().tolist())
+    transmission_input = st.selectbox("Transmission", data["transmission_type"].unique().tolist())
+    fuel_type_input = st.selectbox("Fuel Type", data["fuel_type"].unique().tolist())
+with col2:
+    power_ps = st.number_input("Power (PS)", min_value=50, value=150)
+    power_kw = st.number_input("Power (KW)", min_value=50 * 0.7355, value=150 * 0.7355)
+    mileage = st.number_input("Mileage (km)", min_value=0, value=50000)
+    vehicle_age = st.number_input("Vehicle Age (years)", min_value=0, value=5)
+    fuel_consumption = st.number_input("Fuel Consumption (L/100km)", min_value=0.0, value=8.0)
 
-# -------------------------------------------
-# Sidebar Inputs for Car Specifications
-# -------------------------------------------
-st.sidebar.header("Car Specifications")
-brand_input = st.sidebar.selectbox("Brand", brands)
-model_input = st.sidebar.selectbox("Model", models_list)
-color_input = st.sidebar.selectbox("Color", colors)
-transmission_input = st.sidebar.selectbox("Transmission", transmissions)
-fuel_type_input = st.sidebar.selectbox("Fuel Type", fuel_types)
-power_ps = st.sidebar.number_input("Power (PS)", min_value=50, value=150)
-power_kw = st.sidebar.number_input("Power (KW)", min_value=50 * 0.7355, value=150 * 0.7355)
-mileage = st.sidebar.number_input("Mileage (km)", min_value=0, value=50000)
-vehicle_age = st.sidebar.number_input("Vehicle Age (years)", min_value=0, value=5)
-fuel_consumption = st.sidebar.number_input("Fuel Consumption (L/100km)", min_value=0.0, value=8.0)
-
-# -------------------------------------------
-# Create Raw Input DataFrame
-# -------------------------------------------
+# ----------------------------------------------------
+# Build Raw Input DataFrame & Preprocess for Prediction
+# ----------------------------------------------------
 raw_input = pd.DataFrame([{
     "power_kw": power_kw,
     "power_ps": power_ps,
@@ -154,34 +133,49 @@ raw_input = pd.DataFrame([{
     "fuel_type": fuel_type_input
 }])
 
-# -------------------------------------------
-# Preprocessing: One-Hot Encoding & Scaling
-# -------------------------------------------
+# Preprocessing: One-Hot Encoding for Categorical Features
 categorical_columns = ["brand", "model", "color", "transmission_type", "fuel_type"]
 input_dummies = pd.get_dummies(raw_input, columns=categorical_columns, drop_first=True)
-# Reindex to match training features
+# Reindex to match the training feature order
 input_df = input_dummies.reindex(columns=expected_columns, fill_value=0)
 # Scale numerical features
 numerical_columns = ["power_kw", "power_ps", "fuel_consumption_l_100km.1", "mileage_in_km", "vehicle_age"]
 input_df[numerical_columns] = scaler.transform(input_df[numerical_columns])
 
-# -------------------------------------------
-# Display Input Summary in a Container (Three Columns)
-# -------------------------------------------
+# ----------------------------------------------------
+# Sidebar: Display Car Specifications Summary (Read-Only)
+# ----------------------------------------------------
+with st.sidebar:
+    st.markdown("## Car Specifications Summary")
+    spec_summary = {
+        "Brand": brand_input,
+        "Model": model_input,
+        "Color": color_input,
+        "Transmission": transmission_input,
+        "Fuel Type": fuel_type_input,
+        "Power (PS)": power_ps,
+        "Power (KW)": power_kw,
+        "Mileage (km)": mileage,
+        "Vehicle Age": vehicle_age,
+        "Fuel Consumption (L/100km)": fuel_consumption,
+    }
+    for key, value in spec_summary.items():
+        st.write(f"**{key}:** {value}")
+
+# ----------------------------------------------------
+# Optionally, Also Display a Detailed Summary in Main Area (Three-Column Layout)
+# ----------------------------------------------------
 with st.container():
     st.markdown("<div class='input-container'>", unsafe_allow_html=True)
-    st.markdown("<h4>Car Specifications</h4>", unsafe_allow_html=True)
-    
-    # Use raw_input for display (preserving original text values)
+    st.markdown("<h4>Detailed Car Specifications</h4>", unsafe_allow_html=True)
+    # Use raw_input for display so text values are preserved
     input_items = list(raw_input.iloc[0].items())
-    
-    # Calculate splitting indices to divide items into three columns evenly
+    # Split into three columns
     n = len(input_items)
     base = n // 3
     r = n % 3
     i1 = base + (1 if r > 0 else 0)
     i2 = i1 + base + (1 if r > 1 else 0)
-    
     col1_items = input_items[:i1]
     col2_items = input_items[i1:i2]
     col3_items = input_items[i2:]
@@ -193,30 +187,29 @@ with st.container():
             html += f"<p><strong>{key_formatted}:</strong> {value}</p>"
         html += "</div>"
         return html
-    
+
     col1_html = build_column_html(col1_items)
     col2_html = build_column_html(col2_items)
     col3_html = build_column_html(col3_items)
     
-    col1, col2, col3 = st.columns(3)
-    with col1:
+    c1, c2, c3 = st.columns(3)
+    with c1:
         st.markdown(col1_html, unsafe_allow_html=True)
-    with col2:
+    with c2:
         st.markdown(col2_html, unsafe_allow_html=True)
-    with col3:
+    with c3:
         st.markdown(col3_html, unsafe_allow_html=True)
-    
     st.markdown("</div>", unsafe_allow_html=True)
 
-# -------------------------------------------
+# ----------------------------------------------------
 # Prediction
-# -------------------------------------------
-if st.sidebar.button("Predict Price"):
+# ----------------------------------------------------
+if st.button("Predict Price"):
     prediction = model.predict(input_df)[0]
     st.subheader(f"Predicted Value: ${prediction:,.2f}")
     st.balloons()
 
-# -------------------------------------------
+# ----------------------------------------------------
 # Footer
-# -------------------------------------------
+# ----------------------------------------------------
 st.markdown("<div class='footer'>Modern Car Price Predictor App © 2025</div>", unsafe_allow_html=True)
