@@ -113,7 +113,7 @@ with col1:
 with col2:
     fuel_type_input = st.selectbox("Fuel Type", data["fuel_type"].unique().tolist())
     transmission_input = st.selectbox("Transmission", data["transmission_type"].unique().tolist())
-    mileage = st.number_input("Mileage (km)", min_value=0, value=50000)
+    mileage = st.number_input("Mileage (km)", min_value=0, max_value=250000, value=50000)
     vehicle_age = st.number_input("Vehicle Age (years)", min_value=0, value=5)
     fuel_consumption = 7
 
