@@ -51,19 +51,20 @@ st.markdown(
     [data-testid="stAppViewContainer"] h1,
     [data-testid="stAppViewContainer"] h3,
     [data-testid="stAppViewContainer"] p {
-         color: #e0e0e0 !important;
+         color: #ffffff !important;
          color-scheme: dark !important;
          font-family: 'Inter', sans-serif !important;
-         /* Add any additional styles here */
     }
     
     .input-container {
+         font-family: 'Inter', sans-serif !important;
          background: #121212 !important;
          padding: 20px !important;
          border-radius: 10px !important;
          margin-bottom: 20px !important;
     }
     .stButton>button {
+         font-family: 'Inter', sans-serif !important;
          width: 75% !important;
          margin: 0 auto !important;
          margin-top: 36px !important;
@@ -82,6 +83,7 @@ st.markdown(
          transform: scale(1.05);
     }
     .prediction-card {
+         font-family: 'Inter', sans-serif !important;
          background: #222 !important;
          border-radius: 12px !important;
          padding: 30px !important;
@@ -94,6 +96,7 @@ st.markdown(
     }
     /* Footer styling */
     .footer {
+         font-family: 'Inter', sans-serif !important;
          text-align: center !important;
          color: #777 !important;
          margin-top: 40px !important;
