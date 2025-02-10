@@ -152,43 +152,6 @@ with st.sidebar:
     for key, value in spec_summary.items():
         st.write(f"**{key}:** {value}")
 
-# Display a Detailed Summary in Main Area
-with st.container():
-    st.markdown("<div class='input-container'>", unsafe_allow_html=True)
-    st.markdown("<h4>Detailed Car Specifications</h4>", unsafe_allow_html=True)
-    # Use raw_input for display so text values are preserved
-    input_items = list(raw_input.iloc[0].items())
-    # Split into three columns
-    n = len(input_items)
-    base = n // 3
-    r = n % 3
-    i1 = base + (1 if r > 0 else 0)
-    i2 = i1 + base + (1 if r > 1 else 0)
-    col1_items = input_items[:i1]
-    col2_items = input_items[i1:i2]
-    col3_items = input_items[i2:]
-    
-    def build_column_html(items):
-        html = "<div style='font-size:16px; line-height:1.8;'>"
-        for key, value in items:
-            key_formatted = key.replace("_", " ").title()
-            html += f"<p><strong>{key_formatted}:</strong> {value}</p>"
-        html += "</div>"
-        return html
-
-    col1_html = build_column_html(col1_items)
-    col2_html = build_column_html(col2_items)
-    col3_html = build_column_html(col3_items)
-    
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown(col1_html, unsafe_allow_html=True)
-    with c2:
-        st.markdown(col2_html, unsafe_allow_html=True)
-    with c3:
-        st.markdown(col3_html, unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-
 # Prediction
 if st.button("Predict Price"):
     prediction = model.predict(input_df)[0]
