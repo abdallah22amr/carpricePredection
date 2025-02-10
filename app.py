@@ -112,7 +112,7 @@ with col1:
     fuel_type_input = st.selectbox("Fuel Type", data["fuel_type"].unique().tolist())
 with col2:
     power_ps = st.number_input("Power (PS)", min_value=50, value=150)
-    power_kw = st.number_input("Power (KW)", min_value=int(50 * 0.7355), value=int(150 * 0.7355))
+    power_kw = power_ps*0.735 
     mileage = st.number_input("Mileage (km)", min_value=0, value=50000)
     vehicle_age = st.number_input("Vehicle Age (years)", min_value=0, value=5)
     fuel_consumption = st.number_input("Fuel Consumption (L/100km)", min_value=0.0, value=8.0)
@@ -165,4 +165,4 @@ if st.button("Predict Price"):
     st.balloons()
 
 # Footer
-st.markdown("<div class='footer'>Modern Car Price Predictor App © 2025</div>", unsafe_allow_html=True)
+st.markdown("<div class='footer'>Supervised by Prof. Tarek © 2025</div>", unsafe_allow_html=True)
