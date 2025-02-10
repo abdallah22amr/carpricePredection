@@ -31,14 +31,12 @@ scaler = load_scaler()
 st.markdown(
     """
     <style>
-    /* Global Background Image - target both selectors */
     [data-testid="stAppViewContainer"], .stApp {
          background: url('https://www.motorfinanceonline.com/wp-content/uploads/sites/6/2025/01/carwow-shutterstock_2356848413.jpg') no-repeat center center fixed !important;
          background-size: cover !important;
          position: relative;
          z-index: 0;
     }
-    /* Dim the background by adding an overlay */
     [data-testid="stAppViewContainer"]::before {
          content: "";
          position: absolute;
@@ -46,23 +44,20 @@ st.markdown(
          left: 0 !important;
          right: 0 !important;
          bottom: 0 !important;
-         background: rgba(0, 0, 0, 0.7) !important;  /* Increased opacity to dim more */
+         background: rgba(0, 0, 0, 0.85) !important;
          z-index: -1 !important;
     }
-    /* Global Styles */
     body {
          font-family: 'Inter', sans-serif !important;
          color: #e0e0e0 !important;
-         color-scheme: dark;  /* Force dark mode for better contrast */
+         color-scheme: dark !important;
     }
-    /* Container for input fields */
     .input-container {
          background: #121212 !important;
          padding: 20px !important;
          border-radius: 10px !important;
          margin-bottom: 20px !important;
     }
-    /* Modern button styling - wide, centered, gradient based on #FF4B4B */
     .stButton>button {
          width: 75% !important;
          margin: 0 auto !important;
@@ -81,7 +76,6 @@ st.markdown(
     .stButton>button:hover {
          transform: scale(1.05);
     }
-    /* Prediction card styling with increased shadow */
     .prediction-card {
          background: #222 !important;
          border-radius: 12px !important;
@@ -90,7 +84,7 @@ st.markdown(
          font-size: 28px !important;
          font-weight: 600 !important;
          color: #FF4B4B !important;
-         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6) !important;  /* Increased shadow */
+         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6) !important;
          margin-top: 20px !important;
     }
     /* Footer styling */
@@ -106,7 +100,6 @@ st.markdown(
 )
 
 st.title("Used Car Price Predictor")
-st.image("carwow-shutterstock_2356848413.jpg", use_container_width=True)
 
 # Input Fields in Main Area
 st.markdown("### Enter Car Specifications")
