@@ -53,7 +53,7 @@ st.markdown(
 
     /* Modern button styling - wide predict button */
     .stButton>button {
-         width: 50% !important;
+         width: 85% !important;
          margin: 0 auto !important;
          display: block !important;
          background: linear-gradient(135deg, #FF4B4B, #FF7F7F) !important;
