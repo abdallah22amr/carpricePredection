@@ -30,14 +30,6 @@ scaler = load_scaler()
 # Custom CSS Injection
 st.markdown(
     """
-    <style>
-    .stApp {
-     background: url('https://media.licdn.com/dms/image/v2/D4D12AQHwUy4ckMgtdQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1671439273569?e=1744848000&v=beta&t=AMmGJG_cWN5OMyoNLs0dF4o4e2L-hTqP9idEZNwhaLs/image.jpg') !important;
-     background-size: cover;
-     background-position: center;
-     background-repeat: no-repeat;
-     background-attachment: fixed;
-         
     /* Container for input fields */
     .input-container {
         background: #121212;
@@ -78,6 +70,21 @@ st.markdown(
         color: #777;
         margin-top: 40px;
         font-size: 14px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    """
+    <style>
+    [data-testid="stAppViewContainer"] {
+         background: url('https://your-image-url.com/image.jpg') no-repeat center center fixed !important;
+         background-size: cover !important;
+         background-position: center !important;
+         background-repeat: no-repeat !important;
+         background-attachment: fixed !important;
     }
     </style>
     """,
