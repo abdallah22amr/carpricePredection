@@ -47,6 +47,15 @@ st.markdown(
          background: rgba(0, 0, 0, 0.85) !important;
          z-index: -1 !important;
     }
+    
+    [data-testid="stAppViewContainer"] h1,
+    [data-testid="stAppViewContainer"] h3,
+    [data-testid="stAppViewContainer"] p {
+         color: #ffffff !important;
+         font-family: 'Inter', sans-serif !important;
+         /* Add any additional styles here */
+    }
+    
     body {
          font-family: 'Inter', sans-serif !important;
          color: #e0e0e0 !important;
