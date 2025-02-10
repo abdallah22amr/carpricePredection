@@ -31,15 +31,13 @@ scaler = load_scaler()
 st.markdown(
     """
     <style>
-    /* Import Google Font */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-
-    /* Global styles */
-    body {
-        font-family: 'Inter', sans-serif;
-        background: linear-gradient(135deg, #1e1e1e, #2e2e2e) !important;
-        color: #e0e0e0 !important;
-    }
+    .stApp {
+     background: url('https://www.motorfinanceonline.com/wp-content/uploads/sites/6/2025/01/carwow-shutterstock_2356848413.jpg/image.jpg');
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+         
     /* Container for input fields */
     .input-container {
         background: #121212;
@@ -87,26 +85,6 @@ st.markdown(
 )
 
 st.title("Used Car Price Predictor")
-
-def add_bg_from_local(image_file):
-    with open(image_file, "rb") as image:
-        encoded_string = base64.b64encode(image.read()).decode()
-    st.markdown(
-         f"""
-         <style>
-         .stApp {{
-             background: url(data:image/jpeg;base64,{encoded_string});
-             background-size: cover;
-             background-position: center;
-             background-repeat: no-repeat;
-             background-attachment: fixed;
-         }}
-         </style>
-         """,
-         unsafe_allow_html=True
-    )
-
-add_bg_from_local("carwow-shutterstock_2356848413.jpg")
 
 # Input Fields
 st.markdown("### Enter Car Specifications")
