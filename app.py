@@ -58,7 +58,7 @@ st.markdown(
          color: white !important;
          font-weight: bold !important;
          padding: 12px 24px !important;
-         margin-top: 12px !important;
+         margin-top: 24px !important;
          border-radius: 8px !important;
          font-size: 16px !important;
          transition: transform 0.3s ease;
