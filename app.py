@@ -3,9 +3,6 @@ import pandas as pd
 import joblib
 from catboost import CatBoostRegressor
 
-# ----------------------------------------------------
-# Cached Functions to Load Data, Model, and Artifacts
-# ----------------------------------------------------
 @st.cache_resource
 def load_data():
     data = pd.read_csv("Cars_Data.csv")
@@ -25,15 +22,12 @@ def load_expected_columns():
 def load_scaler():
     return joblib.load("scaler.pkl")
 
-# Load artifacts
 data = load_data()
 model = load_model()
 expected_columns = load_expected_columns()
 scaler = load_scaler()
 
-# ----------------------------------------------------
-# Custom CSS Injection for a Modern Look
-# ----------------------------------------------------
+# Custom CSS Injection
 st.markdown(
     """
     <style>
@@ -92,15 +86,29 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# ----------------------------------------------------
-# App Title and Header Image
-# ----------------------------------------------------
 st.title("Used Car Price Predictor")
-st.image("carwow-shutterstock_2356848413.jpg", use_container_width=True)
 
-# ----------------------------------------------------
-# Main Area: Input Fields (Not in the Sidebar)
-# ----------------------------------------------------
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as image:
+        encoded_string = base64.b64encode(image.read()).decode()
+    st.markdown(
+         f"""
+         <style>
+         .stApp {{
+             background: url(data:image/jpeg;base64,{encoded_string});
+             background-size: cover;
+             background-position: center;
+             background-repeat: no-repeat;
+             background-attachment: fixed;
+         }}
+         </style>
+         """,
+         unsafe_allow_html=True
+    )
+
+add_bg_from_local("carwow-shutterstock_2356848413.jpg")
+
+# Input Fields
 st.markdown("### Enter Car Specifications")
 col1, col2 = st.columns(2)
 with col1:
@@ -117,9 +125,7 @@ with col2:
     vehicle_age = st.number_input("Vehicle Age (years)", min_value=0, value=5)
     fuel_consumption = st.number_input("Fuel Consumption (L/100km)", min_value=0.0, value=8.0)
 
-# ----------------------------------------------------
-# Build Raw Input DataFrame & Preprocess for Prediction
-# ----------------------------------------------------
+# Raw Input DataFrame
 raw_input = pd.DataFrame([{
     "power_kw": power_kw,
     "power_ps": power_ps,
@@ -133,18 +139,16 @@ raw_input = pd.DataFrame([{
     "fuel_type": fuel_type_input
 }])
 
-# Preprocessing: One-Hot Encoding for Categorical Features
+# One-Hot Encoding for Categorical Features
 categorical_columns = ["brand", "model", "color", "transmission_type", "fuel_type"]
 input_dummies = pd.get_dummies(raw_input, columns=categorical_columns, drop_first=True)
-# Reindex to match the training feature order
 input_df = input_dummies.reindex(columns=expected_columns, fill_value=0)
+
 # Scale numerical features
 numerical_columns = ["power_kw", "power_ps", "fuel_consumption_l_100km.1", "mileage_in_km", "vehicle_age"]
 input_df[numerical_columns] = scaler.transform(input_df[numerical_columns])
 
-# ----------------------------------------------------
-# Sidebar: Display Car Specifications Summary (Read-Only)
-# ----------------------------------------------------
+# Sidebar
 with st.sidebar:
     st.markdown("## Car Specifications Summary")
     spec_summary = {
@@ -162,9 +166,7 @@ with st.sidebar:
     for key, value in spec_summary.items():
         st.write(f"**{key}:** {value}")
 
-# ----------------------------------------------------
-# Optionally, Also Display a Detailed Summary in Main Area (Three-Column Layout)
-# ----------------------------------------------------
+# Display a Detailed Summary in Main Area
 with st.container():
     st.markdown("<div class='input-container'>", unsafe_allow_html=True)
     st.markdown("<h4>Detailed Car Specifications</h4>", unsafe_allow_html=True)
@@ -201,15 +203,11 @@ with st.container():
         st.markdown(col3_html, unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ----------------------------------------------------
 # Prediction
-# ----------------------------------------------------
 if st.button("Predict Price"):
     prediction = model.predict(input_df)[0]
     st.subheader(f"Predicted Value: ${prediction:,.2f}")
     st.balloons()
 
-# ----------------------------------------------------
 # Footer
-# ----------------------------------------------------
 st.markdown("<div class='footer'>Modern Car Price Predictor App © 2025</div>", unsafe_allow_html=True)
