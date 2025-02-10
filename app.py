@@ -33,7 +33,7 @@ st.markdown(
     <style>
     /* Global Background Image - target both selectors */
     [data-testid="stAppViewContainer"], .stApp {
-         background: url('https://your-image-url.com/background.jpg') no-repeat center center fixed !important;
+         background: url('https://www.motorfinanceonline.com/wp-content/uploads/sites/6/2025/01/carwow-shutterstock_2356848413.jpg') no-repeat center center fixed !important;
          background-size: cover !important;
          position: relative;
          z-index: 0;
@@ -42,24 +42,24 @@ st.markdown(
     [data-testid="stAppViewContainer"]::before {
          content: "";
          position: absolute;
-         top: 0;
-         left: 0;
-         right: 0;
-         bottom: 0;
-         background: rgba(0, 0, 0, 0.5);  /* Adjust opacity as needed */
-         z-index: -1;
+         top: 0 !important;
+         left: 0 !important;
+         right: 0 !important;
+         bottom: 0 !important;
+         background: rgba(0, 0, 0, 0.5) !important;
+         z-index: -1 !important;;
     }
     /* Global Styles */
     body {
-         font-family: 'Inter', sans-serif;
-         color: #e0e0e0 !important;
+         font-family: 'Inter', sans-serif !important;
+         color: #e0e0e0 !important !important;
     }
     /* Container for input fields */
     .input-container {
-         background: #121212;
-         padding: 20px;
-         border-radius: 10px;
-         margin-bottom: 20px;
+         background: #121212 !important;
+         padding: 20px !important;
+         border-radius: 10px !important;
+         margin-bottom: 20px !important;
     }
     /* Modern button styling - wide, centered, gradient based on #FF4B4B */
     .stButton>button {
@@ -81,22 +81,22 @@ st.markdown(
     }
     /* Prediction card styling with subtle shadow */
     .prediction-card {
-         background: #222;
-         border-radius: 12px;
-         padding: 30px;
-         text-align: center;
-         font-size: 28px;
-         font-weight: 600;
-         color: #4CAF50;
-         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-         margin-top: 20px;
+         background: #222 !important;
+         border-radius: 12px !important;
+         padding: 30px !important;
+         text-align: center !important;
+         font-size: 28px !important;
+         font-weight: 600 !important;
+         color: #4CAF50 !important;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5) !important;
+         margin-top: 20px !important;
     }
     /* Footer styling */
     .footer {
-         text-align: center;
-         color: #777;
-         margin-top: 40px;
-         font-size: 14px;
+         text-align: center !important;
+         color: #777 !important;
+         margin-top: 40px !important;
+         font-size: 14px !important;
     }
     </style>
     """,
