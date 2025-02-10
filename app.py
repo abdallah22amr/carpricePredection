@@ -27,7 +27,7 @@ model = load_model()
 expected_columns = load_expected_columns()
 scaler = load_scaler()
 
-# Custom CSS Injection (Background, Dimming Overlay, Global Styles, and Modified Button)
+# Custom CSS Injection (Background, Dimming Overlay, Global Styles, and Modified Button & Prediction Card)
 st.markdown(
     """
     <style>
@@ -46,13 +46,14 @@ st.markdown(
          left: 0 !important;
          right: 0 !important;
          bottom: 0 !important;
-         background: rgba(0, 0, 0, 0.5) !important;
-         z-index: -1 !important;;
+         background: rgba(0, 0, 0, 0.7) !important;
+         z-index: -1 !important;
     }
     /* Global Styles */
     body {
          font-family: 'Inter', sans-serif !important;
-         color: #e0e0e0 !important !important;
+         color: #e0e0e0 !important;
+         color-scheme: dark !important;
     }
     /* Container for input fields */
     .input-container {
@@ -80,7 +81,7 @@ st.markdown(
     .stButton>button:hover {
          transform: scale(1.05);
     }
-    /* Prediction card styling with subtle shadow */
+    /* Prediction card styling with increased shadow */
     .prediction-card {
          background: #222 !important;
          border-radius: 12px !important;
@@ -89,7 +90,7 @@ st.markdown(
          font-size: 28px !important;
          font-weight: 600 !important;
          color: #FF4B4B !important;
-         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5) !important;
+         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6) !important;
          margin-top: 20px !important;
     }
     /* Footer styling */
