@@ -104,7 +104,6 @@ st.markdown(
 )
 
 st.title("Used Car Price Predictor")
-st.image("carwow-shutterstock_2356848413.jpg", use_container_width=True)
 
 # Input Fields in Main Area
 st.markdown("### Enter Car Specifications")
