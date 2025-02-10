@@ -143,19 +143,19 @@ input_df[numerical_columns] = scaler.transform(input_df[numerical_columns])
 # Sidebar: Read-Only Car Specifications Summary
 with st.sidebar:
     st.markdown("## Car Specifications Summary")
+    summary_html = "<div class='text-box'>"
     spec_summary = {
         "Brand": brand_input,
         "Model": model_input,
+        "Color": color_input,
         "Transmission": transmission_input,
         "Fuel Type": fuel_type_input,
-        "Color": color_input,
         "Power (PS)": power_ps,
         "Power (KW)": power_kw,
         "Mileage (km)": mileage,
         "Vehicle Age": vehicle_age,
+        "Fuel Consumption (L/100km)": fuel_consumption,
     }
-    for key, value in spec_summary.items():
-        st.write(f"**{key}:** {value}")
 
 # Prediction: Using a styled prediction card
 if st.button("Predict Price"):
