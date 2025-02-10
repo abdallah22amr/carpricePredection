@@ -63,8 +63,9 @@ st.markdown(
     }
     /* Modern button styling - wide, centered, gradient based on #FF4B4B */
     .stButton>button {
-         width: 50% !important;
+         width: 75% !important;
          margin: 0 auto !important;
+         margin-top: 36px !important;
          display: block !important;
          background: linear-gradient(135deg, #FF4B4B, #FF7F7F) !important;
          color: white !important;
@@ -87,7 +88,7 @@ st.markdown(
          text-align: center !important;
          font-size: 28px !important;
          font-weight: 600 !important;
-         color: #4CAF50 !important;
+         color: #FF4B4B !important;
          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5) !important;
          margin-top: 20px !important;
     }
