@@ -27,13 +27,13 @@ model = load_model()
 expected_columns = load_expected_columns()
 scaler = load_scaler()
 
-# Custom CSS Injection
+# Custom CSS Injection (Background Image & Wide Button)
 st.markdown(
     """
     <style>
-    /* Global Background Image */
-    [data-testid="stAppViewContainer"] {
-         background: url('https://your-image-url.com/background.jpg') no-repeat center center fixed !important;
+    /* Global Background Image - target both selectors */
+    [data-testid="stAppViewContainer"], .stApp {
+         background: url('https://drive.google.com/file/d/1Nr2bbNFmuvrIkRkTMrVmUyCCtVYX43hw/view?usp=sharing') no-repeat center center fixed !important;
          background-size: cover !important;
     }
 
@@ -51,8 +51,9 @@ st.markdown(
          margin-bottom: 20px;
     }
 
-    /* Modern button styling */
+    /* Modern button styling - wide predict button */
     .stButton>button {
+         width: 100% !important;
          background: linear-gradient(135deg, #4CAF50, #45A049) !important;
          color: white !important;
          font-weight: bold !important;
@@ -94,11 +95,10 @@ st.markdown(
 
 st.title("Used Car Price Predictor")
 
-# Input Fields
+# Input Fields in Main Area
 st.markdown("### Enter Car Specifications")
 col1, col2 = st.columns(2)
 with col1:
-    # Use the original lists from your data if needed; here we load them from the CSV.
     brand_input = st.selectbox("Brand", data["brand"].unique().tolist())
     model_input = st.selectbox("Model", data["model"].unique().tolist())
     color_input = st.selectbox("Color", data["color"].unique().tolist())
@@ -106,7 +106,7 @@ with col1:
     fuel_type_input = st.selectbox("Fuel Type", data["fuel_type"].unique().tolist())
 with col2:
     power_ps = st.number_input("Power (PS)", min_value=50, value=150)
-    power_kw = st.number_input("Power (KW)", min_value=50 * 0.7355, value=150 * 0.7355)
+    power_kw = st.number_input("Power (KW)", min_value=int(50 * 0.7355), value=int(150 * 0.7355))
     mileage = st.number_input("Mileage (km)", min_value=0, value=50000)
     vehicle_age = st.number_input("Vehicle Age (years)", min_value=0, value=5)
     fuel_consumption = st.number_input("Fuel Consumption (L/100km)", min_value=0.0, value=8.0)
@@ -134,7 +134,7 @@ input_df = input_dummies.reindex(columns=expected_columns, fill_value=0)
 numerical_columns = ["power_kw", "power_ps", "fuel_consumption_l_100km.1", "mileage_in_km", "vehicle_age"]
 input_df[numerical_columns] = scaler.transform(input_df[numerical_columns])
 
-# Sidebar
+# Sidebar: Read-Only Car Specifications Summary
 with st.sidebar:
     st.markdown("## Car Specifications Summary")
     spec_summary = {
