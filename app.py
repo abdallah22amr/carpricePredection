@@ -106,14 +106,14 @@ st.markdown("### Enter Car Specifications")
 col1, col2 = st.columns(2)
 with col1:
     brand_input = st.selectbox("Brand", data["brand"].unique().tolist())
-    fuel_type_input = st.selectbox("Fuel Type", data["fuel_type"].unique().tolist())
+    model_input = st.selectbox("Model", data["model"].unique().tolist())
     power_ps = st.number_input("Power (PS)", min_value=50, value=150)
-    mileage = st.number_input("Mileage (km)", min_value=0, value=50000)
+    color_input = st.selectbox("Color", data["color"].unique().tolist())
     power_kw = power_ps*0.735 
 with col2:
-    model_input = st.selectbox("Model", data["model"].unique().tolist())
+    fuel_type_input = st.selectbox("Fuel Type", data["fuel_type"].unique().tolist())
     transmission_input = st.selectbox("Transmission", data["transmission_type"].unique().tolist())
-    color_input = st.selectbox("Color", data["color"].unique().tolist())
+    mileage = st.number_input("Mileage (km)", min_value=0, value=50000)
     vehicle_age = st.number_input("Vehicle Age (years)", min_value=0, value=5)
     fuel_consumption = 7
 
