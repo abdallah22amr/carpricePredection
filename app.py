@@ -28,20 +28,22 @@ expected_columns = load_expected_columns()
 scaler = load_scaler()
 
 # Custom CSS Injection (All rules end with !important)
+import streamlit as st
+
 st.markdown(
     """
     <style>
-    html { 
+    :root {
          color-scheme: dark !important;
     }
-    /* Global Background Image - target both selectors */
+    /* Global Background Image */
     [data-testid="stAppViewContainer"], .stApp {
          background: url('https://www.motorfinanceonline.com/wp-content/uploads/sites/6/2025/01/carwow-shutterstock_2356848413.jpg') no-repeat center center fixed !important;
          background-size: cover !important;
          position: relative !important;
          z-index: 0 !important;
     }
-    /* Dim the background by adding an overlay */
+    /* Dim the background */
     [data-testid="stAppViewContainer"]::before {
          content: "" !important;
          position: absolute !important;
@@ -52,60 +54,16 @@ st.markdown(
          background: rgba(0, 0, 0, 0.7) !important;
          z-index: -1 !important;
     }
-    /* Global Styles */
+    /* Force dark mode on body */
     body {
-         font-family: 'Inter', sans-serif !important;
+         background-color: #1e1e1e !important;
          color: #e0e0e0 !important;
-    }
-    /* Container for input fields */
-    .input-container {
-         background: #121212 !important;
-         padding: 20px !important;
-         border-radius: 10px !important;
-         margin-bottom: 20px !important;
-    }
-    /* Modern button styling - wide, centered, gradient based on #FF4B4B */
-    .stButton>button {
-         width: 75% !important;
-         margin: 0 auto !important;
-         margin-top: 36px !important;
-         display: block !important;
-         background: linear-gradient(135deg, #FF4B4B, #FF7F7F) !important;
-         color: white !important;
-         font-weight: bold !important;
-         padding: 12px 24px !important;
-         border-radius: 8px !important;
-         font-size: 16px !important;
-         transition: transform 0.3s ease !important;
-         border: none !important;
-         cursor: pointer !important;
-    }
-    .stButton>button:hover {
-         transform: scale(1.05) !important;
-    }
-    /* Prediction card styling with increased shadow */
-    .prediction-card {
-         background: #222 !important;
-         border-radius: 12px !important;
-         padding: 30px !important;
-         text-align: center !important;
-         font-size: 28px !important;
-         font-weight: 600 !important;
-         color: #FF4B4B !important;
-         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6) !important;
-         margin-top: 20px !important;
-    }
-    /* Footer styling */
-    .footer {
-         text-align: center !important;
-         color: #777 !important;
-         margin-top: 40px !important;
-         font-size: 14px !important;
+         font-family: 'Inter', sans-serif !important;
     }
     /* Sidebar styling */
     [data-testid="stSidebar"] {
          background: rgba(0, 0, 0, 0.7) !important;
-         color: white !important;
+         color: #e0e0e0 !important;
     }
     /* Sidebar toggle arrow styling */
     [data-testid="stSidebarNav"] {
@@ -122,7 +80,6 @@ st.markdown(
 )
 
 st.title("Used Car Price Predictor")
-st.image("carwow-shutterstock_2356848413.jpg", use_container_width=True)
 
 # Input Fields in Main Area
 st.markdown("### Enter Car Specifications")
