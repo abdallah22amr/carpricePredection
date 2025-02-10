@@ -57,6 +57,7 @@ st.markdown(
          margin: 0 auto !important;
          display: block !important;
          background: linear-gradient(135deg, #FF4B4B, #FF7F7F) !important;
+         margin-top: 36px !important;
          color: white !important;
          font-weight: bold !important;
          padding: 12px 24px !important;
