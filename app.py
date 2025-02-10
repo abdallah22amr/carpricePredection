@@ -165,4 +165,4 @@ if st.button("Predict Price"):
     st.balloons()
 
 # Footer
-st.markdown("<div class='footer'>Supervised by Prof. Tarek © 2025</div>", unsafe_allow_html=True)
+st.markdown("<div class='footer'>Supervised by Prof. Tarek , Cairo University © 2025</div>", unsafe_allow_html=True)
